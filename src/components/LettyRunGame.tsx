@@ -484,44 +484,31 @@ const LettyRunGame = () => {
 
   // Handle game over
   const handleGameOver = useCallback(async (finalScore: number) => {
-    try {
-      trackGameEnd(finalScore);
-    } catch (e) {
-      console.error('Error tracking game end:', e);
-    }
+    // Track game end
+    trackGameEnd(finalScore);
 
-    // 점수가 0 이상이면 항상 앱에 하트 지급 알림
-    if (finalScore >= 0) {
-      try {
-        notifyGameEnd(finalScore);
-      } catch (e) {
-        console.error('Error notifying game end to native app:', e);
-      }
-    }
-
-    // 리더보드 점수 제출 (별도 처리)
+    // Only notify native app and submit score if score > 0
     if (finalScore > 0 && !scoreSubmittedRef.current) {
-      try {
-        const qualifies = await checkQualifiesForTop10(finalScore);
-        if (qualifies) {
-          scoreSubmittedRef.current = true;
-          const playerName = getNicknameFromUrlOrStorage();
-          const result = await submitScore(finalScore);
-          if (result.success) {
-            trackScoreSubmit(finalScore, playerName);
-            setTimeout(() => {
-              window.location.href = "/scoreboard";
-            }, 1500);
-          } else if (result.shouldShowError) {
-            toast({
-              title: "Submission Failed",
-              description: "Please try again later",
-              variant: "destructive",
-            });
-          }
+      // Notify native app about game end
+      notifyGameEnd(finalScore);
+
+      const qualifies = await checkQualifiesForTop10(finalScore);
+      if (qualifies) {
+        scoreSubmittedRef.current = true;
+        const playerName = getNicknameFromUrlOrStorage();
+        const result = await submitScore(finalScore);
+        if (result.success) {
+          trackScoreSubmit(finalScore, playerName);
+          setTimeout(() => {
+            window.location.href = "/scoreboard";
+          }, 1500);
+        } else if (result.shouldShowError) {
+          toast({
+            title: "Submission Failed",
+            description: "Please try again later",
+            variant: "destructive",
+          });
         }
-      } catch (e) {
-        console.error('Error submitting score:', e);
       }
     }
   }, [checkQualifiesForTop10, submitScore, toast]);

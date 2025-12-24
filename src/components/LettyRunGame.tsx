@@ -338,7 +338,11 @@ const LettyRunGame = () => {
         ry: o.h * 0.33,
       };
       if (ellipseRectIntersect(ell, hitPlayer)) {
-        console.log('[Collision] Game over! Current state.score:', state.score);
+        try {
+          alert(`[Collision] Game over! score: ${state.score}`);
+        } catch (e) {
+          // ignore
+        }
         state.running = false;
         state.gameOver = true;
         updateUI();
@@ -489,30 +493,39 @@ const LettyRunGame = () => {
   const handleGameOver = useCallback(async (finalScore: number) => {
     // Prevent multiple calls
     if (gameOverHandledRef.current) {
-      console.log('[handleGameOver] Already handled, skipping. finalScore:', finalScore);
       return;
     }
     gameOverHandledRef.current = true;
 
-    console.log('[handleGameOver] Called with finalScore:', finalScore);
-    console.log('[handleGameOver] typeof finalScore:', typeof finalScore);
+    try {
+      alert(`[handleGameOver] finalScore: ${finalScore}`);
+    } catch (e) {
+      // ignore
+    }
 
     // Track game end
     try {
       trackGameEnd(finalScore);
-      console.log('[handleGameOver] trackGameEnd completed');
     } catch (e) {
-      console.error('[handleGameOver] trackGameEnd error:', e);
+      // ignore
     }
 
     // Always notify native app if score > 0
     if (finalScore > 0) {
-      console.log('[handleGameOver] Score > 0, calling notifyGameEnd with:', finalScore);
+      try {
+        alert(`[handleGameOver] Calling notifyGameEnd with score: ${finalScore}`);
+      } catch (e) {
+        // ignore
+      }
+
       try {
         notifyGameEnd(finalScore);
-        console.log('[handleGameOver] notifyGameEnd completed');
       } catch (e) {
-        console.error('[handleGameOver] notifyGameEnd error:', e);
+        try {
+          alert(`[handleGameOver] notifyGameEnd ERROR: ${e}`);
+        } catch (e2) {
+          // ignore
+        }
       }
 
       // Only submit to leaderboard if not already submitted

@@ -488,26 +488,29 @@ const LettyRunGame = () => {
     trackGameEnd(finalScore);
 
     // Only notify native app and submit score if score > 0
-    if (finalScore > 0 && !scoreSubmittedRef.current) {
-      // Notify native app about game end
+    if (finalScore > 0) {
+      // Notify native app about game end (always notify, regardless of scoreSubmitted)
       notifyGameEnd(finalScore);
 
-      const qualifies = await checkQualifiesForTop10(finalScore);
-      if (qualifies) {
-        scoreSubmittedRef.current = true;
-        const playerName = getNicknameFromUrlOrStorage();
-        const result = await submitScore(finalScore);
-        if (result.success) {
-          trackScoreSubmit(finalScore, playerName);
-          setTimeout(() => {
-            window.location.href = "/scoreboard";
-          }, 1500);
-        } else if (result.shouldShowError) {
-          toast({
-            title: "Submission Failed",
-            description: "Please try again later",
-            variant: "destructive",
-          });
+      // Only submit to leaderboard if not already submitted
+      if (!scoreSubmittedRef.current) {
+        const qualifies = await checkQualifiesForTop10(finalScore);
+        if (qualifies) {
+          scoreSubmittedRef.current = true;
+          const playerName = getNicknameFromUrlOrStorage();
+          const result = await submitScore(finalScore);
+          if (result.success) {
+            trackScoreSubmit(finalScore, playerName);
+            setTimeout(() => {
+              window.location.href = "/scoreboard";
+            }, 1500);
+          } else if (result.shouldShowError) {
+            toast({
+              title: "Submission Failed",
+              description: "Please try again later",
+              variant: "destructive",
+            });
+          }
         }
       }
     }

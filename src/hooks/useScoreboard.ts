@@ -91,7 +91,8 @@ export const useScoreboard = () => {
 
   // Check if a score qualifies for top 10
   const checkQualifiesForTop10 = async (score: number): Promise<boolean> => {
-    
+    console.log('[checkQualifiesForTop10] Checking score:', score, 'GAME_ID:', GAME_ID);
+
     try {
       // Get Korean timezone date
       const koreanTz = 'Asia/Seoul';
@@ -99,6 +100,8 @@ export const useScoreboard = () => {
       const koreanDate = formatInTimeZone(now, koreanTz, 'yyyy-MM-dd');
 
       const tableName = getTableName(flavor);
+      console.log('[checkQualifiesForTop10] Table:', tableName, 'Date:', koreanDate);
+
       const { data, error } = await supabase
         .from(tableName)
         .select('score')
@@ -108,16 +111,26 @@ export const useScoreboard = () => {
         .order('score', { ascending: false })
         .limit(10);
 
-      if (error) throw error;
+      console.log('[checkQualifiesForTop10] Query result - data:', data, 'error:', error);
+
+      if (error) {
+        console.error('[checkQualifiesForTop10] Supabase error:', error.message, error.details, error.hint);
+        throw error;
+      }
 
       // If less than 10 scores, automatically qualifies
-      if (!data || data.length < 10) return true;
+      if (!data || data.length < 10) {
+        console.log('[checkQualifiesForTop10] Less than 10 scores, qualifies automatically');
+        return true;
+      }
 
       // Check if score is higher than the lowest in top 10
       const lowestTopScore = data[data.length - 1]?.score || 0;
-      return score > lowestTopScore;
+      const qualifies = score > lowestTopScore;
+      console.log('[checkQualifiesForTop10] Lowest top 10 score:', lowestTopScore, 'Qualifies:', qualifies);
+      return qualifies;
     } catch (err) {
-      console.error('Error checking qualification:', err);
+      console.error('[checkQualifiesForTop10] Error:', err);
       return false;
     }
   };

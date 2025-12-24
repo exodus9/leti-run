@@ -68,6 +68,7 @@ const LettyRunGame = () => {
   const { toast } = useToast();
   const { checkQualifiesForTop10, submitScore } = useScoreboard();
   const scoreSubmittedRef = useRef(false);
+  const gameOverHandledRef = useRef(false);
 
   // Constants
   const GROUND_RATIO = 0.82;
@@ -486,38 +487,65 @@ const LettyRunGame = () => {
 
   // Handle game over
   const handleGameOver = useCallback(async (finalScore: number) => {
+    // Prevent multiple calls
+    if (gameOverHandledRef.current) {
+      console.log('[handleGameOver] Already handled, skipping. finalScore:', finalScore);
+      return;
+    }
+    gameOverHandledRef.current = true;
+
     console.log('[handleGameOver] Called with finalScore:', finalScore);
+    console.log('[handleGameOver] typeof finalScore:', typeof finalScore);
 
     // Track game end
-    trackGameEnd(finalScore);
+    try {
+      trackGameEnd(finalScore);
+      console.log('[handleGameOver] trackGameEnd completed');
+    } catch (e) {
+      console.error('[handleGameOver] trackGameEnd error:', e);
+    }
 
-    // Only notify native app and submit score if score > 0
+    // Always notify native app if score > 0
     if (finalScore > 0) {
       console.log('[handleGameOver] Score > 0, calling notifyGameEnd with:', finalScore);
-      // Notify native app about game end (always notify, regardless of scoreSubmitted)
-      notifyGameEnd(finalScore);
+      try {
+        notifyGameEnd(finalScore);
+        console.log('[handleGameOver] notifyGameEnd completed');
+      } catch (e) {
+        console.error('[handleGameOver] notifyGameEnd error:', e);
+      }
 
       // Only submit to leaderboard if not already submitted
       if (!scoreSubmittedRef.current) {
-        const qualifies = await checkQualifiesForTop10(finalScore);
-        if (qualifies) {
-          scoreSubmittedRef.current = true;
-          const playerName = getNicknameFromUrlOrStorage();
-          const result = await submitScore(finalScore);
-          if (result.success) {
-            trackScoreSubmit(finalScore, playerName);
-            setTimeout(() => {
-              window.location.href = "/scoreboard";
-            }, 1500);
-          } else if (result.shouldShowError) {
-            toast({
-              title: "Submission Failed",
-              description: "Please try again later",
-              variant: "destructive",
-            });
+        console.log('[handleGameOver] Checking if qualifies for top 10...');
+        try {
+          const qualifies = await checkQualifiesForTop10(finalScore);
+          console.log('[handleGameOver] qualifies:', qualifies);
+          if (qualifies) {
+            scoreSubmittedRef.current = true;
+            const playerName = getNicknameFromUrlOrStorage();
+            console.log('[handleGameOver] Submitting score for:', playerName);
+            const result = await submitScore(finalScore);
+            console.log('[handleGameOver] submitScore result:', result);
+            if (result.success) {
+              trackScoreSubmit(finalScore, playerName);
+              setTimeout(() => {
+                window.location.href = "/scoreboard";
+              }, 1500);
+            } else if (result.shouldShowError) {
+              toast({
+                title: "Submission Failed",
+                description: "Please try again later",
+                variant: "destructive",
+              });
+            }
           }
+        } catch (e) {
+          console.error('[handleGameOver] Leaderboard submission error:', e);
         }
       }
+    } else {
+      console.log('[handleGameOver] Score is 0 or less, not notifying native app');
     }
   }, [checkQualifiesForTop10, submitScore, toast]);
 
@@ -537,6 +565,7 @@ const LettyRunGame = () => {
     consecutiveRef.current = 0;
     speedUpRef.current = { active: false, x: 0, y: 0, life: 0 };
     scoreSubmittedRef.current = false;
+    gameOverHandledRef.current = false;
 
     gameStateRef.current = {
       score: 0,

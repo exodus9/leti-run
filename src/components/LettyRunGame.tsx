@@ -113,18 +113,33 @@ const LettyRunGame = () => {
 
   // Resize canvas
   useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
     const resize = () => {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
       const dpr = Math.min(3, window.devicePixelRatio || 1);
-      canvas.width = Math.floor(canvas.clientWidth * dpr);
-      canvas.height = Math.floor(canvas.clientHeight * dpr);
-      const ctx = canvas.getContext("2d");
-      if (ctx) ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const width = canvas.clientWidth;
+      const height = canvas.clientHeight;
+      // 유효한 크기일 때만 리사이즈
+      if (width > 0 && height > 0) {
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        const ctx = canvas.getContext("2d");
+        if (ctx) ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
     };
-    resize();
+
+    // ResizeObserver로 실제 레이아웃 변경 감지
+    const resizeObserver = new ResizeObserver(() => {
+      resize();
+    });
+    resizeObserver.observe(canvas);
+
     window.addEventListener("resize", resize);
-    return () => window.removeEventListener("resize", resize);
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", resize);
+    };
   }, []);
 
   // Utils
@@ -438,12 +453,11 @@ const LettyRunGame = () => {
 
     // Player
     const lettyImg = lettyImgRef.current;
+    const size = Math.max(player.w + 36, player.h + 44);
     const dx = player.x - 18;
     const dy = player.y - 22;
-    const dw = player.w + 36;
-    const dh = player.h + 44;
     if (lettyImg?.complete && lettyImg.naturalWidth > 0) {
-      ctx.drawImage(lettyImg, dx, dy, dw, dh);
+      ctx.drawImage(lettyImg, dx, dy, size, size);
     } else {
       ctx.fillStyle = "#fff";
       ctx.fillRect(player.x, player.y, player.w, player.h);

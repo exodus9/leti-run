@@ -38,12 +38,12 @@ export interface Translation {
 
 export const translations: Record<Locale, Translation> = {
 	en: {
-		gameTitle: "Run Leti!",
+		gameTitle: "Reti Run",
 		gameTip: "The faster you collect hearts, the faster you go!",
 
 		howToPlayTitle: "HOW TO PLAY",
 		objectiveTitle: "Controls",
-		objectiveDescription: "Tap/Click/Space = Jump (up to 3x)",
+		objectiveDescription: "Tap = Jump (up to 3x)",
 		scoringTitle: "Scoring",
 		scoringDescription: "Collect hearts! Stage 10+: 2x points",
 		timeLimitTitle: "Speed Up",
@@ -67,12 +67,12 @@ export const translations: Record<Locale, Translation> = {
 		menuLeaderboard: "Leaderboard",
 	},
 	ko: {
-		gameTitle: "달려라 레티!",
+		gameTitle: "레티런",
 		gameTip: "하트를 모을 수록 속도가 빨라져요!",
 
 		howToPlayTitle: "게임 방법",
 		objectiveTitle: "조작법",
-		objectiveDescription: "탭/클릭/스페이스 = 점프 (최대 3단)",
+		objectiveDescription: "탭 = 점프 (최대 3단)",
 		scoringTitle: "점수",
 		scoringDescription: "하트를 모으세요! 10단계+: 2배 점수",
 		timeLimitTitle: "스피드 업",
@@ -96,12 +96,12 @@ export const translations: Record<Locale, Translation> = {
 		menuLeaderboard: "리더보드",
 	},
 	ja: {
-		gameTitle: "走れレティ!",
+		gameTitle: "レティラン",
 		gameTip: "ハートを集めるほど速くなるよ!",
 
 		howToPlayTitle: "遊び方",
 		objectiveTitle: "操作",
-		objectiveDescription: "タップ/クリック/スペース = ジャンプ (最大3段)",
+		objectiveDescription: "タップ = ジャンプ (最大3段)",
 		scoringTitle: "スコア",
 		scoringDescription: "ハートを集めよう！ステージ10+: 2倍得点",
 		timeLimitTitle: "スピードアップ",
@@ -125,12 +125,12 @@ export const translations: Record<Locale, Translation> = {
 		menuLeaderboard: "ランキング",
 	},
 	"zh-CN": {
-		gameTitle: "快跑莱蒂!",
+		gameTitle: "蕾蒂跑",
 		gameTip: "收集的爱心越多，速度越快！",
 
 		howToPlayTitle: "游戏玩法",
 		objectiveTitle: "操作",
-		objectiveDescription: "点击/空格 = 跳跃 (最多3段)",
+		objectiveDescription: "点击 = 跳跃 (最多3段)",
 		scoringTitle: "计分",
 		scoringDescription: "收集爱心！第10阶段+：2倍得分",
 		timeLimitTitle: "加速",
@@ -154,12 +154,12 @@ export const translations: Record<Locale, Translation> = {
 		menuLeaderboard: "排行榜",
 	},
 	"zh-TW": {
-		gameTitle: "快跑萊蒂!",
+		gameTitle: "蕾蒂跑",
 		gameTip: "收集的愛心越多，速度越快！",
 
 		howToPlayTitle: "遊戲玩法",
 		objectiveTitle: "操作",
-		objectiveDescription: "點擊/空格 = 跳躍 (最多3段)",
+		objectiveDescription: "點擊 = 跳躍 (最多3段)",
 		scoringTitle: "計分",
 		scoringDescription: "收集愛心！第10階段+：2倍得分",
 		timeLimitTitle: "加速",

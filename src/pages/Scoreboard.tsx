@@ -83,7 +83,7 @@ const Scoreboard = () => {
           </h1>
 
           {/* Scoreboard */}
-          <div className="bg-white border-4 border-red-400 rounded-3xl shadow-2xl p-4 md:p-8">
+          <div className="bg-white border-4 border-red-400 rounded-3xl shadow-2xl p-4 md:p-8 overflow-hidden">
             {scores.length === 0 ? (
               <div className="text-center py-12">
                 <img src="/leti.webp" alt="Leti" className="w-24 h-24 object-contain mx-auto mb-4" />
@@ -99,7 +99,7 @@ const Scoreboard = () => {
                 {scores.map((score, index) => (
                   <div
                     key={score.id}
-                    className={`flex items-center justify-between p-4 border-4 rounded-2xl ${getRankColor(index + 1)} transition-all hover:scale-[1.02] shadow-md`}
+                    className={`flex items-center justify-between p-4 border-4 rounded-2xl ${getRankColor(index + 1)} shadow-md`}
                   >
                     <span className="font-black text-2xl md:text-3xl min-w-[50px] flex-shrink-0 text-gray-800">
                       {getRankMedal(index + 1)}

@@ -643,15 +643,22 @@ const LetiRunGame = () => {
   }, []);
 
   return (
-    <div className="relative w-full h-full">
+    <div
+      className="relative w-full h-full select-none"
+      style={{ WebkitUserSelect: "none", WebkitTouchCallout: "none" }}
+      onDragStart={(e) => e.preventDefault()}
+      onContextMenu={(e) => e.preventDefault()}
+    >
       <canvas
         ref={canvasRef}
-        className="w-full h-full block touch-manipulation"
-        style={{ height: "calc(100vh - 80px)" }}
+        className="w-full h-full block touch-manipulation select-none"
+        style={{ height: "calc(100vh - 80px)", WebkitUserSelect: "none", WebkitTouchCallout: "none" }}
         onPointerDown={(e) => {
           e.preventDefault();
           jump();
         }}
+        onTouchMove={(e) => e.preventDefault()}
+        onDragStart={(e) => e.preventDefault()}
       />
 
       {/* HUD */}

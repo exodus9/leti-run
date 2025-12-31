@@ -14,7 +14,7 @@ const queryClient = new QueryClient();
 const App = () => {
   useEffect(() => {
     // Preload webp images
-    const imagesToPreload = ['/bg.webp', '/letty.webp', '/rini.webp'];
+    const imagesToPreload = ['/bg.webp', '/leti.webp', '/reeni.webp'];
     imagesToPreload.forEach((src) => {
       const img = new Image();
       img.src = src;

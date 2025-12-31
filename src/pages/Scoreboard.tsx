@@ -86,7 +86,7 @@ const Scoreboard = () => {
           <div className="bg-white border-4 border-red-400 rounded-3xl shadow-2xl p-4 md:p-8">
             {scores.length === 0 ? (
               <div className="text-center py-12">
-                <img src="/letty.webp" alt="Letty" className="w-24 h-24 object-contain mx-auto mb-4" />
+                <img src="/leti.webp" alt="Leti" className="w-24 h-24 object-contain mx-auto mb-4" />
                 <p className="font-bold text-2xl text-red-400 mb-4">
                   {t.noScoresYet}
                 </p>
@@ -123,7 +123,7 @@ const Scoreboard = () => {
                 size="lg"
                 className="font-black text-xl bg-gradient-to-r from-red-400 to-rose-400 hover:from-red-500 hover:to-rose-500 text-white shadow-xl rounded-2xl px-8 py-6 border-4 border-white flex items-center gap-2"
               >
-                <img src="/letty.webp" alt="Letty" className="w-8 h-8 object-contain" />
+                <img src="/leti.webp" alt="Leti" className="w-8 h-8 object-contain" />
                 {t.menuPlay} ❤️
               </Button>
             </Link>

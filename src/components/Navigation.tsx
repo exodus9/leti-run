@@ -13,7 +13,7 @@ const Navigation = () => {
   const { t } = useLocale();
 
   const navItems = [
-    { path: "/", label: t.menuPlay, emoji: "letty" },
+    { path: "/", label: t.menuPlay, emoji: "leti" },
     { path: "/scoreboard", label: t.menuLeaderboard, emoji: "🏆" },
   ];
 
@@ -29,8 +29,8 @@ const Navigation = () => {
           : "text-gray-700"
       )}
     >
-      {item.emoji === "letty" ? (
-        <img src="/letty.webp" alt="Letty" className="w-6 h-6 object-contain mr-2" />
+      {item.emoji === "leti" ? (
+        <img src="/leti.webp" alt="Leti" className="w-6 h-6 object-contain mr-2" />
       ) : (
         <span className="mr-2">{item.emoji}</span>
       )}
@@ -53,7 +53,7 @@ const Navigation = () => {
               <SheetContent side="left" className="w-[250px] bg-gradient-to-b from-rose-50 to-sky-50 border-rose-200">
                 <div className="flex flex-col space-y-4 mt-8">
                   <h2 className="font-bold text-red-400 text-xl mb-4 flex items-center gap-2">
-                    <img src="/letty.webp" alt="Letty" className="w-8 h-8 object-contain" />
+                    <img src="/leti.webp" alt="Leti" className="w-8 h-8 object-contain" />
                     {t.menuTitle}
                   </h2>
                   {navItems.map((item) => (
@@ -68,7 +68,7 @@ const Navigation = () => {
           <div className="absolute left-1/2 transform -translate-x-1/2">
             <Link to="/">
               <h1 className="text-xl md:text-2xl lg:text-3xl font-black text-white whitespace-nowrap drop-shadow-lg flex items-center gap-1" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.2)' }}>
-                <img src="/letty.webp" alt="Letty" className="w-8 h-8 md:w-10 md:h-10 object-contain" />
+                <img src="/leti.webp" alt="Leti" className="w-8 h-8 md:w-10 md:h-10 object-contain" />
                 {t.gameTitle} ❤️
               </h1>
             </Link>

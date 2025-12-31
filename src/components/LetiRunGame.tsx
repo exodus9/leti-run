@@ -20,7 +20,7 @@ interface GameState {
   isProcessingStart: boolean;
 }
 
-const LettyRunGame = () => {
+const LetiRunGame = () => {
   const { t } = useLocale();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const gameStateRef = useRef<GameState>({
@@ -40,8 +40,8 @@ const LettyRunGame = () => {
   const lastTimeRef = useRef<number>(0);
 
   // Images
-  const lettyImgRef = useRef<HTMLImageElement | null>(null);
-  const riniImgRef = useRef<HTMLImageElement | null>(null);
+  const letiImgRef = useRef<HTMLImageElement | null>(null);
+  const reeniImgRef = useRef<HTMLImageElement | null>(null);
   const bgImgRef = useRef<HTMLImageElement | null>(null);
 
   // Game objects refs
@@ -98,13 +98,13 @@ const LettyRunGame = () => {
 
   // Load images
   useEffect(() => {
-    const lettyImg = new Image();
-    lettyImg.src = "/letty.webp";
-    lettyImgRef.current = lettyImg;
+    const letiImg = new Image();
+    letiImg.src = "/leti.webp";
+    letiImgRef.current = letiImg;
 
-    const riniImg = new Image();
-    riniImg.src = "/rini.webp";
-    riniImgRef.current = riniImg;
+    const reeniImg = new Image();
+    reeniImg.src = "/reeni.webp";
+    reeniImgRef.current = reeniImg;
 
     const bgImg = new Image();
     bgImg.src = "/bg.webp";
@@ -421,14 +421,14 @@ const LettyRunGame = () => {
     ctx.fillRect(0, g, w, h - g);
 
     // Obstacles
-    const riniImg = riniImgRef.current;
+    const reeniImg = reeniImgRef.current;
     for (const o of obstaclesRef.current) {
       ctx.save();
       ctx.translate(o.x + o.w / 2, o.y + o.h / 2);
       ctx.scale(o.scale, o.scale);
       ctx.translate(-o.w / 2, -o.h / 2);
-      if (riniImg?.complete && riniImg.naturalWidth > 0) {
-        ctx.drawImage(riniImg, 0, 0, o.w, o.h);
+      if (reeniImg?.complete && reeniImg.naturalWidth > 0) {
+        ctx.drawImage(reeniImg, 0, 0, o.w, o.h);
       } else {
         ctx.fillStyle = "rgba(0,0,0,0.22)";
         ctx.fillRect(0, 0, o.w, o.h);
@@ -452,12 +452,12 @@ const LettyRunGame = () => {
     }
 
     // Player
-    const lettyImg = lettyImgRef.current;
+    const letiImg = letiImgRef.current;
     const size = Math.max(player.w + 36, player.h + 44);
     const dx = player.x - 18;
     const dy = player.y - 22;
-    if (lettyImg?.complete && lettyImg.naturalWidth > 0) {
-      ctx.drawImage(lettyImg, dx, dy, size, size);
+    if (letiImg?.complete && letiImg.naturalWidth > 0) {
+      ctx.drawImage(letiImg, dx, dy, size, size);
     } else {
       ctx.fillStyle = "#fff";
       ctx.fillRect(player.x, player.y, player.w, player.h);
@@ -671,7 +671,7 @@ const LettyRunGame = () => {
         <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-sky-200/80 to-green-200/80 backdrop-blur-sm p-4">
           <div className="bg-white border-4 border-red-400 rounded-3xl p-6 w-full max-w-[380px] text-center shadow-2xl">
             <h2 className="text-2xl font-black mb-3 text-red-400 flex items-center justify-center gap-2">
-              <img src="/letty.webp" alt="Letty" className="w-10 h-10 object-contain" />
+              <img src="/leti.webp" alt="Leti" className="w-10 h-10 object-contain" />
               {t.gameTitle} ❤️
             </h2>
             <div className="text-sm text-gray-700 mb-4 leading-relaxed bg-gradient-to-r from-rose-50 to-sky-50 p-3 rounded-xl">
@@ -717,7 +717,7 @@ const LettyRunGame = () => {
           <div className="bg-white border-4 border-red-400 rounded-3xl p-6 w-full max-w-[380px] text-center shadow-2xl">
             <h2 className="text-3xl font-black mb-3 text-red-400 flex items-center justify-center gap-2">
               {t.gameOverTitle}
-              <img src="/letty.webp" alt="Letty" className="w-10 h-10 object-contain" />
+              <img src="/leti.webp" alt="Leti" className="w-10 h-10 object-contain" />
             </h2>
             <div className="text-2xl mb-4 bg-gradient-to-r from-rose-50 to-sky-50 py-3 rounded-xl">
               {t.finalScoreText} <span className="font-black text-red-500">❤️ {uiState.score}</span>
@@ -735,4 +735,4 @@ const LettyRunGame = () => {
   );
 };
 
-export default LettyRunGame;
+export default LetiRunGame;

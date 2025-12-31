@@ -1,5 +1,5 @@
 import Navigation from "@/components/Navigation";
-import LettyRunGame from "@/components/LettyRunGame";
+import LetiRunGame from "@/components/LetiRunGame";
 
 const Index = () => {
   return (
@@ -7,7 +7,7 @@ const Index = () => {
       <div className="w-full max-w-[600px] flex flex-col">
         <Navigation />
         <main className="flex-1">
-          <LettyRunGame />
+          <LetiRunGame />
         </main>
       </div>
     </div>

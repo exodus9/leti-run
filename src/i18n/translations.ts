@@ -38,7 +38,7 @@ export interface Translation {
 
 export const translations: Record<Locale, Translation> = {
 	en: {
-		gameTitle: "Run Letty!",
+		gameTitle: "Run Leti!",
 		gameTip: "The faster you collect hearts, the faster you go!",
 
 		howToPlayTitle: "HOW TO PLAY",

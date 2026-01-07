@@ -509,7 +509,7 @@ const LetiRunGame = () => {
     trackGameEnd(finalScore);
 
     // Always notify native app if score > 0
-    if (finalScore > 0) {
+    if (finalScore >= 0) {
       notifyGameEnd(finalScore);
 
       // Only submit to leaderboard if not already submitted
